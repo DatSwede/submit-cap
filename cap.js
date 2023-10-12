@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
   const form = document.getElementById('form-1');
-  
+  const errorMsgElement = document.querySelector('[msg="cap"]');
+
   if (form) {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -13,7 +14,10 @@ document.addEventListener("DOMContentLoaded", function() {
       submissions = submissions.filter(timestamp => now - timestamp < twelveHours);
       
       if (submissions.length >= 5) {
-        alert('You can only submit 5 times every 12 hours.');
+        // Display the error message element
+        if (errorMsgElement) {
+          errorMsgElement.style.display = 'block';
+        }
         return false;
       } else {
         // Add current timestamp to the submissions array
