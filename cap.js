@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
       if (submissions.length >= 5) {
         // Display the error message element
         if (errorMsgElement) {
-          errorMsgElement.style.display = 'block';
+          errorMsgElement.style.display = 'flex';
         }
         return false;
       } else {
