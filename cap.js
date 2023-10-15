@@ -10,9 +10,6 @@ document.addEventListener("DOMContentLoaded", function() {
     submissions = submissions.filter(timestamp => now - timestamp < twelveHours);
     const remainingSubmissions = 5 - submissions.length;
 
-    console.log('Updating remaining submissions...');  // Diagnostic log
-    console.log('Remaining submissions:', remainingSubmissions);  // Diagnostic log
-
     if (remainingSubmissionsElement) {
       remainingSubmissionsElement.textContent = remainingSubmissions.toString();
     }
@@ -21,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   if (form) {
     form.addEventListener('submit', function(e) {
-      e.preventDefault();
       const submissions = updateRemainingSubmissionsDisplay();
 
       if (submissions.length >= 5) {
@@ -29,12 +25,12 @@ document.addEventListener("DOMContentLoaded", function() {
         if (errorMsgElement) {
           errorMsgElement.style.display = 'flex';
         }
+        e.preventDefault(); // Prevent the form submission
         return false;
       } else {
         const now = new Date().getTime();
         submissions.push(now);
         localStorage.setItem('form-1-submissions', JSON.stringify(submissions));
-        form.submit(); 
       }
     });
   }
