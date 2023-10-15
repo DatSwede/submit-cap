@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const form = document.getElementById('form-1');
   const errorMsgElement = document.querySelector('[msg="cap"]');
   const remainingSubmissionsElement = document.querySelector('[cap="number"]');
+  const submitButton = document.getElementById('request-btn');
 
   function updateRemainingSubmissionsDisplay() {
     const now = new Date().getTime();
@@ -16,28 +17,32 @@ document.addEventListener("DOMContentLoaded", function() {
     return submissions;
   }
 
-  if (form) {
+  if (form && submitButton) {
     form.addEventListener('submit', function(e) {
       const submissions = updateRemainingSubmissionsDisplay();
+      const now = new Date().getTime();
 
       if (submissions.length >= 5) {
+        // Hide the submission button
+        submitButton.style.display = 'none';
+
         // Display the error message element
         if (errorMsgElement) {
           errorMsgElement.style.display = 'flex';
         }
 
-        // Stop the event from bubbling up further and prevent the form submission
-        e.stopPropagation();
         e.preventDefault();
         return false;
       } else {
-        const now = new Date().getTime();
         submissions.push(now);
         localStorage.setItem('form-1-submissions', JSON.stringify(submissions));
       }
     });
   }
 
-  // Initial display update
-  updateRemainingSubmissionsDisplay();
+  // Initial display update and check to hide button if limit is reached
+  const submissions = updateRemainingSubmissionsDisplay();
+  if (submissions.length >= 5) {
+    submitButton.style.display = 'none';
+  }
 });
