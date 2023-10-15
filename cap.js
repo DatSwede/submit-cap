@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", function() {
     submissions = submissions.filter(timestamp => now - timestamp < twelveHours);
     const remainingSubmissions = 5 - submissions.length;
 
+    console.log('Updating remaining submissions...');  // Diagnostic log
+    console.log('Remaining submissions:', remainingSubmissions);  // Diagnostic log
+
     if (remainingSubmissionsElement) {
       remainingSubmissionsElement.textContent = remainingSubmissions.toString();
     }
@@ -29,10 +32,9 @@ document.addEventListener("DOMContentLoaded", function() {
         return false;
       } else {
         const now = new Date().getTime();
-        // Add current timestamp to the submissions array
         submissions.push(now);
         localStorage.setItem('form-1-submissions', JSON.stringify(submissions));
-        form.submit(); // Submit the form
+        form.submit(); 
       }
     });
   }
