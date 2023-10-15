@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", function() {
   const remainingSubmissionsElement = document.querySelector('[cap="number"]');
   const submitButton = document.getElementById('request-btn');
 
+  console.log('Form:', form);
+  console.log('Error message element:', errorMsgElement);
+  console.log('Remaining submissions element:', remainingSubmissionsElement);
+  console.log('Submit button:', submitButton);
+
   function updateRemainingSubmissionsDisplay() {
     const now = new Date().getTime();
     const twelveHours = 12 * 60 * 60 * 1000;  // 12 hours in milliseconds
@@ -23,6 +28,8 @@ document.addEventListener("DOMContentLoaded", function() {
       const now = new Date().getTime();
 
       if (submissions.length >= 5) {
+        console.log('Submission limit reached.');
+
         // Hide the submission button
         submitButton.style.display = 'none';
 
