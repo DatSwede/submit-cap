@@ -21,11 +21,13 @@ document.addEventListener("DOMContentLoaded", function() {
       const submissions = updateRemainingSubmissionsDisplay();
 
       if (submissions.length >= 5) {
+        // Prevent the form submission
+        e.preventDefault();
+
         // Display the error message element
         if (errorMsgElement) {
           errorMsgElement.style.display = 'flex';
         }
-        e.preventDefault(); // Prevent the form submission
         return false;
       } else {
         const now = new Date().getTime();
