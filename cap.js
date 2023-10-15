@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-  const form = document.getElementById('form-1');
   const errorMsgElement = document.querySelector('[msg="cap"]');
   const remainingSubmissionsElement = document.querySelector('[cap="number"]');
   const submitButton = document.getElementById('request-btn');
@@ -23,20 +22,6 @@ document.addEventListener("DOMContentLoaded", function() {
         errorMsgElement.style.display = 'flex';
       }
     }
-
-    return submissions;
-  }
-
-  if (form) {
-    form.addEventListener('submit', function(e) {
-      const submissions = updateRemainingSubmissionsDisplay();
-      const now = new Date().getTime();
-
-      if (submissions.length < 5) {
-        submissions.push(now);
-        localStorage.setItem('form-1-submissions', JSON.stringify(submissions));
-      }
-    });
   }
 
   // Initial display update
