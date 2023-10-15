@@ -4,11 +4,6 @@ document.addEventListener("DOMContentLoaded", function() {
   const remainingSubmissionsElement = document.querySelector('[cap="number"]');
   const submitButton = document.getElementById('request-btn');
 
-  console.log('Form:', form);
-  console.log('Error message element:', errorMsgElement);
-  console.log('Remaining submissions element:', remainingSubmissionsElement);
-  console.log('Submit button:', submitButton);
-
   function updateRemainingSubmissionsDisplay() {
     const now = new Date().getTime();
     const twelveHours = 12 * 60 * 60 * 1000;  // 12 hours in milliseconds
@@ -19,37 +14,31 @@ document.addEventListener("DOMContentLoaded", function() {
     if (remainingSubmissionsElement) {
       remainingSubmissionsElement.textContent = remainingSubmissions.toString();
     }
+
+    if (remainingSubmissions <= 0) {
+      if (submitButton) {
+        submitButton.style.display = 'none';
+      }
+      if (errorMsgElement) {
+        errorMsgElement.style.display = 'flex';
+      }
+    }
+
     return submissions;
   }
 
-  if (form && submitButton) {
+  if (form) {
     form.addEventListener('submit', function(e) {
       const submissions = updateRemainingSubmissionsDisplay();
       const now = new Date().getTime();
 
-      if (submissions.length >= 5) {
-        console.log('Submission limit reached.');
-
-        // Hide the submission button
-        submitButton.style.display = 'none';
-
-        // Display the error message element
-        if (errorMsgElement) {
-          errorMsgElement.style.display = 'flex';
-        }
-
-        e.preventDefault();
-        return false;
-      } else {
+      if (submissions.length < 5) {
         submissions.push(now);
         localStorage.setItem('form-1-submissions', JSON.stringify(submissions));
       }
     });
   }
 
-  // Initial display update and check to hide button if limit is reached
-  const submissions = updateRemainingSubmissionsDisplay();
-  if (submissions.length >= 5) {
-    submitButton.style.display = 'none';
-  }
+  // Initial display update
+  updateRemainingSubmissionsDisplay();
 });
